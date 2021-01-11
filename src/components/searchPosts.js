@@ -3,13 +3,13 @@ import { Link } from "gatsby"
 import styled from "styled-components"
 import { useFlexSearch } from "react-use-flexsearch"
 import * as queryString from "query-string"
-
+import colors from "../utils/colors"
 import { rhythm } from "../utils/typography"
 
 const SearchBar = styled.div`
   display: flex;
   border: 1px solid #dfe1e5;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 0 auto ${rhythm(1)};
   width: 100%;
   height: 3rem;
@@ -41,64 +41,70 @@ const SearchBar = styled.div`
   }
 `
 
+const PostWrapper = styled.div`
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+  padding-top: 20px; 
+  background: ${colors.light};
+  -webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+  -moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+  box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+  `
+
+const postCard = (props) => {
+  return (
+    <PostWrapper key={props.slug}>
+      <h3
+        style={{
+          marginBottom: rhythm(1 / 4),
+          marginTop: 0,
+        }}
+      >
+        <Link style={{ boxShadow: `none`, color:colors.accent }} to={`/blog${props.slug}`}>
+          {props.title}
+        </Link>
+      </h3>
+      <small style={{color:colors.dark}}>{props.date}</small>
+      <p style={{marginBottom:0,color:colors.text}}
+        dangerouslySetInnerHTML={{
+          __html: props.description || props.excerpt,
+        }}
+      />
+    </PostWrapper>
+  )
+}
+
 const SearchedPosts = ({ results }) =>
   results.length > 0 ? (
     results.map(node => {
-      const date = node.date
-      const title = node.title || node.slug
-      const description = node.description
-      const excerpt = node.excerpt
-      const slug = node.slug
-
-      return (
-        <div key={slug}>
-          <h3
-            style={{
-              marginBottom: rhythm(1 / 4),
-            }}
-          >
-            <Link style={{ boxShadow: `none` }} to={`/blog${slug}`}>
-              {title}
-            </Link>
-          </h3>
-          <small>{date}</small>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: description || excerpt,
-            }}
-          />
-        </div>
-      )
+      const props = {
+        slug: node.slug,
+        title: node.title || node.slug,
+        description: node.description,
+        date: node.date,
+        excerpt: node.excerpt
+      };
+      return postCard(props);
     })
   ) : (
-    <p style={{ textAlign: "center" }}>
-      Sorry, couldn't find any posts matching this search.
-    </p>
-  )
+      <p style={{ textAlign: "center" }}>
+        Sorry, couldn't find any posts matching this search.
+      </p>
+    )
 
 const AllPosts = ({ posts }) => (
-  <div style={{ margin: "20px 0 40px" }}>
+  <div>
     {posts.map(({ node }) => {
       const title = node.frontmatter.title || node.fields.slug
-      return (
-        <div key={node.fields.slug}>
-          <h3
-            style={{
-              marginBottom: rhythm(1 / 4),
-            }}
-          >
-            <Link style={{ boxShadow: `none` }} to={`/blog${node.fields.slug}`}>
-              {title}
-            </Link>
-          </h3>
-          <small>{node.frontmatter.date}</small>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: node.frontmatter.description || node.excerpt,
-            }}
-          />
-        </div>
-      )
+      const props = {
+        slug: node.fields.slug,
+        title: title,
+        description: node.frontmatter.description,
+        date: node.frontmatter.date,
+        excerpt: node.excerpt
+      };
+      return postCard(props)
     })}
   </div>
 )
