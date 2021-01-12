@@ -50,6 +50,14 @@ const PostWrapper = styled.div`
   -webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
   -moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
   box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+  -webkit-transition: 0.1s cubic-bezier(.79,.14,.15,.86);
+  -moz-transition: 0.1s cubic-bezier(.79,.14,.15,.86);
+  -o-transition: 0.1s cubic-bezier(.79,.14,.15,.86);
+  &:hover{
+    transform: scale(1.1);
+    // margin-top: 30px;
+    // margin-bottom:30px
+  }
   `
 
 const postCard = (props) => {
