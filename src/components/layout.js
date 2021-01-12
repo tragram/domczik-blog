@@ -9,6 +9,15 @@ const Container = styled.div`
   display: flex;
 `
 
+const HeaderBackground = styled.div`
+height: 200px;
+  background: ${colors.light};
+  margin-bottom: -200px;
+  -webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+  -moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+  box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.68);
+`
+
 class Layout extends React.Component {
   render() {
     const { location, title, children } = this.props
@@ -60,18 +69,18 @@ class Layout extends React.Component {
     }
     return (
       <Wrapper>
-        <div style={{background: colors.light, height: "200px", marginBottom: "-200px"}}></div>
+        <HeaderBackground></HeaderBackground>
         <div
           style={{
             marginLeft: `auto`,
             marginRight: `auto`,
             maxWidth: rhythm(30),
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-            paddingTop:"20px"
+            paddingTop: "20px"
           }}
         >
-          <Container style={{height: "200px"}}>
-          <header>{header}</header>
+          <Container style={{ height: "200px" }}>
+            <header>{header}</header>
           </Container>
           <main>{children}</main>
         </div>
