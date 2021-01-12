@@ -5,6 +5,10 @@ import colors from "../utils/colors"
 
 import { rhythm, scale } from "../utils/typography"
 
+const Container = styled.div`
+  display: flex;
+`
+
 class Layout extends React.Component {
   render() {
     const { location, title, children } = this.props
@@ -25,7 +29,7 @@ class Layout extends React.Component {
             style={{
               boxShadow: `none`,
               textDecoration: `none`,
-              color: `inherit`,
+              color: colors.accent,
             }}
             to={location.pathname === blogPath ? `/blog/` : `/`}
           >
@@ -56,21 +60,23 @@ class Layout extends React.Component {
     }
     return (
       <Wrapper>
+        <div style={{background: colors.light, height: "200px", marginBottom: "-200px"}}></div>
         <div
           style={{
             marginLeft: `auto`,
             marginRight: `auto`,
             maxWidth: rhythm(30),
             padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
+            paddingTop:"20px"
           }}
         >
+          <Container style={{height: "200px"}}>
           <header>{header}</header>
+          </Container>
           <main>{children}</main>
         </div>
         <Footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          © {new Date().getFullYear()} Dominik Hodan, Built with Gatsby
         </Footer>
       </Wrapper>
     )
@@ -80,11 +86,17 @@ class Layout extends React.Component {
 const Wrapper = styled.div`
   min-height: 100vh;
   background: ${colors.dark};
+  position: relative;
 `
 
 const Footer = styled.footer`
   text-align: center;
-  margin: 24px;
+  background: ${colors.medium};
+  color: ${colors.dark};
+  position: absolute;
+  bottom:0;
+  width: 100%;
+  margin-top: 24px;
 `
 
 export default Layout

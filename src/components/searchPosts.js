@@ -13,7 +13,7 @@ const SearchBar = styled.div`
   margin: 0 auto ${rhythm(1)};
   width: 100%;
   height: 3rem;
-  background: #fdfdfd;
+  background: ${colors.text};
 
   svg {
     margin: auto 1rem;
